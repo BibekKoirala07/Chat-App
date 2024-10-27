@@ -85,7 +85,6 @@ const ForgotPassword = () => {
         <form className="space-y-3">
           <div className="flex flex-col gap-1.5">
             <EachInput
-              label="Email"
               type="email"
               state={email}
               setState={setEmail}

@@ -5,7 +5,6 @@ import AuthCard from "@/components/auth/AuthCard";
 import { AppDispatch, loginStart, loginSuccess } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { url } from "inspector";
 
 const VerifyEmail = () => {
   const url =
@@ -87,7 +86,6 @@ const VerifyEmail = () => {
         <form onSubmit={handleSubmit} className="space-y-3">
           <EachInput
             type="string"
-            label="Verification Code"
             state={code}
             setState={setCode}
             placeholder="Enter the 6-digit code..."

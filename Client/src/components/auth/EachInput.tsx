@@ -1,13 +1,11 @@
 import { Input } from "../ui/input";
 
 const EachInput = ({
-  label,
   type,
   state,
   setState,
   placeholder,
 }: {
-  label: string;
   state: string;
   type: string;
   autoComplete?: boolean;

@@ -155,21 +155,18 @@ const Register = () => {
           </div>
           <EachInput
             type="string"
-            label="Username"
             state={username}
             setState={setUsername}
             placeholder="Enter your username..."
           />
           <EachInput
             type="email"
-            label="Email"
             state={email}
             setState={setEmail}
             placeholder="Enter your email..."
           />
           <EachInput
             type="password"
-            label="Password"
             state={password}
             setState={setPassword}
             placeholder="Enter your password..."
