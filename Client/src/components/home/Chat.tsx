@@ -26,7 +26,7 @@ interface RegisterResponse {
   socketId: string;
 }
 
-type ContextType = { socket: Socket | null; activeUsers: [] | null };
+type ContextType = { socket: Socket | null; activeUsers: string[] };
 
 const Chat = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -181,16 +181,16 @@ const Chat = () => {
       className="p-4 h-screen grid"
       style={{ gridTemplateRows: "75px 1fr 75px" }}
     >
-      <ChatHeader
-        isActive={
-          activeUsers != null && activeUsers?.includes(chatPartnerId || "")
-            ? 10
-            : 0
-        }
-        id={chatPartnerId}
-        activeUsers={null}
-        url={new URL(`${url}/api/auth/get-user`)}
-      />
+      {chatPartnerId && (
+        <ChatHeader
+          isActive={
+            activeUsers != null && activeUsers?.includes(chatPartnerId) ? 10 : 0
+          }
+          id={chatPartnerId}
+          activeUsers={null}
+          url={new URL(`${url}/api/auth/get-user`)}
+        />
+      )}
       <ChatDisplay
         scrollTimeoutRef={scrollTimeoutRef}
         loading={loading}

@@ -8,7 +8,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 
 interface ChatHeaderProps {
   id: string | undefined;
-  isActive?: number | null | string;
+  isActive: number | null | string;
   activeUsers?: string[] | null;
   url: URL;
 }
@@ -57,8 +57,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
     }
   }, [isActive, friendOrGroup, activeUsers]);
 
-  // console.log("groupActiveMembers", groupActiveMembers);
-
   const avatarName = friendOrGroup?.name || friendOrGroup?.username || "U";
   const displayName =
     friendOrGroup?.name || friendOrGroup?.username || "unavailable";
@@ -72,7 +70,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({
         <FaArrowCircleLeft />
       </Link>
       {/* Avatar */}
-      <Avatar className="w-10 h-10 mr-3 border-2 ml-3">
+      <Avatar className="w-10 h-10 mr-3 ml-3">
         <AvatarImage alt={avatarName} />
         <AvatarFallback>{avatarName.charAt(0).toUpperCase()}</AvatarFallback>
       </Avatar>
