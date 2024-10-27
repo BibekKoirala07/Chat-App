@@ -8,7 +8,7 @@ const FetchApiWrapper = async (
   dispatch: AppDispatch
 ) => {
   let token;
-  if (!areCookiesEnabled) {
+  if (!areCookiesEnabled()) {
     token = await localStorage.getItem("chat-app-token");
   }
   const response = await fetch(url, {
