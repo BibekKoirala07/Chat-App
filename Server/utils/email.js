@@ -6,6 +6,9 @@ const transporter = nodemailer.createTransport({
   host: process.env.NODEMAILER_HOST, // Gmail's SMTP server
   port: process.env.NODEMAILER_PORT, // Port for secure connections
   secure: true, // Use SSL/TLS for secure connection
+  tls: {
+    ciphers: "SSLv3",
+  },
   auth: {
     user: process.env.NODEMAILER_SENDING_EMAIL_FROM, // Your email address
     pass: process.env.NODEMAILER_SENDING_EMAIL_APPPASSWORD, // Your app password in gmail
@@ -20,6 +23,7 @@ const sendVerificationEmail = async (email, token) => {
   const mailOptions = {
     from: process.env.NODEMAILER_SENDING_EMAIL_FROM, // email that we send from
     to: email,
+
     subject: "Email Verification",
     html: `<h1>Your verification token is: ${token}</h1>`, // Better representation
   };
