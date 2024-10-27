@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import AuthCard from "@/components/auth/AuthCard";
 import EachInput from "@/components/auth/EachInput";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "@/store/store";
 import { useDispatch } from "react-redux";
-import authService from "@/utils/authService";
 import areCookiesEnabled from "@/utils/areCookiesEnabled";
 
 const Register = () => {
