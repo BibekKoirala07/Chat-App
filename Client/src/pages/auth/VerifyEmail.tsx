@@ -5,8 +5,13 @@ import AuthCard from "@/components/auth/AuthCard";
 import { AppDispatch, loginStart, loginSuccess } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { url } from "inspector";
 
 const VerifyEmail = () => {
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -38,9 +43,8 @@ const VerifyEmail = () => {
     setError(null);
 
     try {
-      const url = `http://localhost:3000/api/auth/verify-email/${code}`;
-      console.log("url", url);
-      const response = await fetch(url, { credentials: "include" });
+      const Url = `${url}/api/auth/verify-email/${code}`;
+      const response = await fetch(Url, { credentials: "include" });
 
       const data = await response.json();
 

@@ -4,6 +4,10 @@ import AuthCard from "@/components/auth/AuthCard";
 import EachInput from "@/components/auth/EachInput";
 
 const ForgotPassword = () => {
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -33,17 +37,14 @@ const ForgotPassword = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/auth/forgot-password",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-          credentials: "include", // Include authentication token in requests
-        }
-      );
+      const response = await fetch(`${url}/api/auth/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+        credentials: "include", // Include authentication token in requests
+      });
 
       const data = await response.json();
 

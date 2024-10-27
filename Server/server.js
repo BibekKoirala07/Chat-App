@@ -96,6 +96,7 @@ const URI =
   process.env.NODE_ENV == "production"
     ? process.env.PROD_MONGO_URI
     : process.env.DEV_MONGO_URI;
+
 connectDB(URI)
   .then(() => {
     server.listen(PORT, () =>

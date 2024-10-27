@@ -8,6 +8,10 @@ import { loginSuccess } from "@/store/store";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
 
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState<string>("");
@@ -44,7 +48,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch(`${url}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

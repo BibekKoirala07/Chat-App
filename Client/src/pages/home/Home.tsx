@@ -55,6 +55,11 @@ type Group = {
 };
 
 const Home = () => {
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
+
   const dispatch: AppDispatch = useDispatch();
   const params = useParams();
   const [groupName, setGroupName] = useState("");
@@ -79,7 +84,7 @@ const Home = () => {
   useEffect(() => {
     if (socket) return;
     // if (!socket.connected) return;
-    const newSocket = io("http://localhost:3000");
+    const newSocket = io(url);
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
@@ -168,12 +173,10 @@ const Home = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const url = new URL(
-        "http://localhost:3000/api/groups/get-groups-for-user"
-      );
+      const fullUrl = new URL(`${url}/api/groups/get-groups-for-user`);
 
       const { response, data } = await FetchApiWrapper(
-        url,
+        fullUrl,
         { method: "GET" },
         dispatch
       );
@@ -188,10 +191,10 @@ const Home = () => {
   // Fetch users and filter them
   useEffect(() => {
     const fetchUsers = async () => {
-      const url = new URL("http://localhost:3000/api/auth/get-all-users");
+      const fullUrl = new URL(`${url}/api/auth/get-all-users`);
 
       const { response, data } = await FetchApiWrapper(
-        url,
+        fullUrl,
         { method: "GET" },
         dispatch
       );
@@ -216,9 +219,9 @@ const Home = () => {
 
   const handleGroupCreate = async () => {
     try {
-      const url = new URL(`http://localhost:3000/api/groups/create`);
+      const fullUrl = new URL(`${url}/api/groups/create`);
       const { response, data } = await FetchApiWrapper(
-        url,
+        fullUrl,
         {
           method: "POST",
 

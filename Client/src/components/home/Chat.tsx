@@ -31,6 +31,11 @@ type ContextType = { socket: Socket | null; activeUsers: [] | null };
 const Chat = () => {
   const dispatch: AppDispatch = useDispatch();
 
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
+
   const { socket, activeUsers } = useOutletContext<ContextType>();
 
   const [hasMoreMessages, setHasMoreMessages] = useState<boolean>(true);
@@ -53,12 +58,12 @@ const Chat = () => {
   const handleFetchMore = useCallback(async () => {
     setLoading(true);
     if (!nextCursor || !chatPartnerId) return;
-    const url = new URL(`http://localhost:3000/api/messages/history`);
-    url.searchParams.set("nextCursor", nextCursor);
-    url.searchParams.set("senderId", _id);
-    url.searchParams.set("receiverId", chatPartnerId);
-    // console.log("url", url);
-    const { response, data } = await FetchApiWrapper(url, {}, dispatch);
+    const fullUrl = new URL(`${url}/api/messages/history`);
+    fullUrl.searchParams.set("nextCursor", nextCursor);
+    fullUrl.searchParams.set("senderId", _id);
+    fullUrl.searchParams.set("receiverId", chatPartnerId);
+    // console.log("fullUrl", fullUrl);
+    const { response, data } = await FetchApiWrapper(fullUrl, {}, dispatch);
     if (response.ok) {
       const { data: messages, nextCursor, success } = data;
 
@@ -72,10 +77,10 @@ const Chat = () => {
   }, [dispatch, nextCursor, _id, chatPartnerId]);
 
   const fetchMessages = useCallback(async () => {
-    const url = new URL(`http://localhost:3000/api/messages/history`);
-    url.searchParams.append("senderId", _id);
-    url.searchParams.append("receiverId", chatPartnerId ?? "");
-    const { response, data } = await FetchApiWrapper(url, {}, dispatch);
+    const fullUrl = new URL(`${url}/api/messages/history`);
+    fullUrl.searchParams.append("senderId", _id);
+    fullUrl.searchParams.append("receiverId", chatPartnerId ?? "");
+    const { response, data } = await FetchApiWrapper(fullUrl, {}, dispatch);
     // console.log("data", data);
     if (response.ok) {
       // console.log("data in response", data.data);
@@ -182,7 +187,7 @@ const Chat = () => {
         }
         id={chatPartnerId}
         activeUsers={null}
-        url={new URL(`http://localhost:3000/api/auth/get-user`)}
+        url={new URL(`${url}/api/auth/get-user`)}
       />
       <ChatDisplay
         scrollTimeoutRef={scrollTimeoutRef}

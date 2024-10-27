@@ -8,6 +8,7 @@ import FetchApiWrapper from "@/utils/FetchApiWrapper";
 import ChatHeader from "../utils/ChatHeader";
 import ChatDisplay from "../utils/ChatDisplay";
 import { Socket } from "socket.io-client";
+import { url } from "inspector";
 // import "react-chat-elements/dist/main.css";
 // import { MessageBox } from "react-chat-elements";
 
@@ -42,6 +43,11 @@ const GroupChat = () => {
   const { id } = useParams();
   const dispatch: AppDispatch = useDispatch();
 
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
+
   const [hasMoreMessages, setHasMoreMessages] = useState<boolean>(true);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
 
@@ -63,10 +69,8 @@ const GroupChat = () => {
     async (cursor: string | null = null) => {
       if (!id) return;
       setLoading(true);
-      const url = new URL(
-        `http://localhost:3000/api/groups/get-group-messages/${id}`
-      );
-      const { response, data } = await FetchApiWrapper(url, {}, dispatch);
+      const fullUrl = new URL(`${url}/api/groups/get-group-messages/${id}`);
+      const { response, data } = await FetchApiWrapper(fullUrl, {}, dispatch);
       if (response.ok) {
         const { data: messages, nextCursor, success } = data;
         // console.log(nextCursor, messages);
@@ -90,14 +94,12 @@ const GroupChat = () => {
 
   const handleFetchMore = useCallback(async () => {
     setLoading(true);
-    const url = new URL(
-      `http://localhost:3000/api/groups/get-group-messages/${id}`
-    );
+    const fullUrl = new URL(`${url}/api/groups/get-group-messages/${id}`);
     if (nextCursor) {
-      url.searchParams.set("nextCursor", nextCursor);
+      fullUrl.searchParams.set("nextCursor", nextCursor);
     }
-    // console.log("url", url);
-    const { response, data } = await FetchApiWrapper(url, {}, dispatch);
+    // console.log("fullUrl", fullUrl);
+    const { response, data } = await FetchApiWrapper(fullUrl, {}, dispatch);
     if (response.ok) {
       const { data: messages, nextCursor, success } = data;
 
@@ -243,7 +245,7 @@ const GroupChat = () => {
         id={id}
         isActive={null}
         activeUsers={activeUsers}
-        url={new URL(`http://localhost:3000/api/groups/get-group-by-id`)}
+        url={new URL(`${url}/api/groups/get-group-by-id`)}
       />
       <ChatDisplay
         scrollTimeoutRef={scrollTimeoutRef}

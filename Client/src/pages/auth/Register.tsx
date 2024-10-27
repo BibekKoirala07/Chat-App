@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const naviagte = useNavigate();
 
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
+
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -78,7 +83,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const response = await fetch(`${url}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

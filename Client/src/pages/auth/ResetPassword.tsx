@@ -7,6 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 const ResetPassword = () => {
   const { token } = useParams();
 
+  const url =
+    import.meta.env.VITE_NODE_ENV == "production"
+      ? import.meta.env.VITE_PROD_BACKEND_URL
+      : import.meta.env.VITE_DEV_BACKEND_URL;
+
   const navigate = useNavigate();
 
   console.log("token", token);
@@ -41,20 +46,17 @@ const ResetPassword = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/auth/reset-password/${token}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            newPassword,
-            confirmPassword,
-          }),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${url}/api/auth/reset-password/${token}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          newPassword,
+          confirmPassword,
+        }),
+        credentials: "include",
+      });
 
       const data = await response.json();
 
