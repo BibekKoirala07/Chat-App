@@ -38,6 +38,7 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
     },
     logout(state) {
+      localStorage.removeItem("chat-app-token");
       state.data = null;
       state.isAuthenticated = false;
       state.error = null;

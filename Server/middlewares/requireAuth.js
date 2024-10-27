@@ -5,7 +5,7 @@ const requireAuth = (req, res, next) => {
   const headerToken = req.headers.authorization.split(" ")[1];
   const token = req.cookies["chat-app-token"] || headerToken;
 
-  console.log("token in require Auth", token);
+  console.log("token in require Auth", token, headerToken);
 
   // check whether we got the token or not
   if (!token) {
