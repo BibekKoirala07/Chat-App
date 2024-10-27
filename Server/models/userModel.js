@@ -35,7 +35,7 @@ userSchema.statics.registerStatics = async function (
     throw createError(400, "Please fill in all fields");
   }
 
-  const isAlreadyRegistered = await this.findOne({ email });
+  const isAlreadyRegistered = await this.findOne({ email, isVerified: true });
   if (isAlreadyRegistered) {
     throw createError(
       409,
