@@ -26,6 +26,7 @@ userRoutes.post("/register", registerController);
 userRoutes.post("/login", loginController);
 
 userRoutes.get("/logout", requireAuth, logoutController);
+
 userRoutes.get("/verify-email/:token", verifyEmailController);
 
 userRoutes.post("/forgot-password", forgotPasswordController);
