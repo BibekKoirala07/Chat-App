@@ -123,7 +123,7 @@ const registerController = async (req, res, next) => {
 
     return res
       .cookie("chat-app-token", token, {
-        secure: false,
+        secure: true, // if the proudction is running in https
         expires: expiryDate,
         httpOnly: true,
       })
@@ -152,7 +152,7 @@ const loginController = async (req, res, next) => {
 
       res.cookie("chat-app-token", token, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         expires: expiryDate,
       });
 
