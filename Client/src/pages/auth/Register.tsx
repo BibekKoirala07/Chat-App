@@ -5,6 +5,8 @@ import EachInput from "@/components/auth/EachInput";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "@/store/store";
 import { useDispatch } from "react-redux";
+import authService from "@/utils/authService";
+import areCookiesEnabled from "@/utils/areCookiesEnabled";
 
 const Register = () => {
   const naviagte = useNavigate();
@@ -21,28 +23,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>("");
   const [success, setSuccess] = useState<string | null>("");
-  const [photo, setPhoto] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(
-    "https://via.placeholder.com/150"
-  );
-  console.log("photo", photo);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setPhoto(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handlePhotoClick = () => {
-    fileInputRef.current?.click();
-  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -86,6 +67,11 @@ const Register = () => {
     }
 
     try {
+      // const response = await authService.register({
+      //   username,
+      //   email,
+      //   password,
+      // });
       const response = await fetch(`${url}/api/auth/register`, {
         method: "POST",
         headers: {
@@ -97,8 +83,6 @@ const Register = () => {
 
       const data = await response.json();
 
-      console.log("data", data);
-
       if (!data.success) {
         setError(data.message || "Registration failed");
         setIsLoading(false);
@@ -106,6 +90,13 @@ const Register = () => {
         setSuccess(data.message);
         if (data.data) {
           dispatch(loginSuccess(data.data)); // Update with correct action and payload
+          const cookieCanBeSet = areCookiesEnabled();
+          if (!cookieCanBeSet) {
+            localStorage.setItem(
+              "chat-app-token",
+              JSON.stringify(data.data.token)
+            );
+          }
         }
 
         setTimeout(() => {
@@ -136,26 +127,6 @@ const Register = () => {
         buttonText="Register"
       >
         <form className="space-y-3">
-          <div className="flex flex-col items-center">
-            <div
-              onClick={handlePhotoClick}
-              className="w-32 h-32 flex items-center justify-center cursor-pointer rounded"
-            >
-              <img
-                src={photoPreview || ""}
-                alt="Preview"
-                className="w-full h-full bg-inherit object-cover rounded-full"
-              />
-            </div>
-            <label className="mt-2 font-semibold">Select Photo :</label>
-            <input
-              type="file"
-              ref={fileInputRef}
-              accept="image/*"
-              onChange={handlePhotoChange}
-              className="hidden"
-            />
-          </div>
           <EachInput
             type="string"
             state={username}

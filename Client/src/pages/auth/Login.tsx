@@ -4,6 +4,7 @@ import EachInput from "@/components/auth/EachInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/store";
+import areCookiesEnabled from "@/utils/areCookiesEnabled";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -81,6 +82,13 @@ const Login = () => {
       } else {
         setSuccess("Login successful!");
         dispatch(loginSuccess(data.data));
+        const cookieCanBeSet = areCookiesEnabled();
+        if (!cookieCanBeSet) {
+          localStorage.setItem(
+            "chat-app-token",
+            JSON.stringify(data.data.token)
+          );
+        }
         navigate("/");
       }
     } catch (error) {

@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 
 const requireAuth = (req, res, next) => {
   // getting token from client
-  const token = req.cookies["chat-app-token"];
+  const headerToken = req.headers.authorization.split(" ")[1];
+  const token = req.cookies["chat-app-token"] || headerToken;
 
   console.log("token in require Auth", token);
 

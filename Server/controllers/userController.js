@@ -108,6 +108,7 @@ const registerController = async (req, res, next) => {
         .json({
           statusCode: 200,
           success: true,
+          token: token,
           data,
           message: "Confirmation Email Sent",
         });
@@ -131,6 +132,7 @@ const registerController = async (req, res, next) => {
       .json({
         statusCode: 200,
         success: true,
+        token,
         data,
         message: "Confirmation Email Sent",
       });
@@ -153,6 +155,7 @@ const loginController = async (req, res, next) => {
       res.cookie("chat-app-token", token, {
         httpOnly: true,
         secure: true,
+
         expires: expiryDate,
       });
 
@@ -160,6 +163,7 @@ const loginController = async (req, res, next) => {
         statusCode: 200,
         success: true,
         data,
+        token,
         message: "Logged In Successfully",
       });
     } else {
