@@ -69,6 +69,8 @@ const Home = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const state = useSelector((state: RootState) => state.user);
 
+  console.log("state", state, users, groups);
+
   const { _id } = state.data;
   const location = useLocation();
 

@@ -16,6 +16,8 @@ const FetchApiWrapper = async (
 
   const data = await response.json();
 
+  console.log("data in fetchApiWrapper", data);
+
   if (!response.ok) {
     if (
       data.message == "No token provided" ||
