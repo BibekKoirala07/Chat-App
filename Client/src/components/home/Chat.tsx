@@ -49,7 +49,7 @@ const Chat = () => {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const chatPartnerIdRef = useRef(chatPartnerId); // Create a ref for chatPartnerId
+  const chatPartnerIdRef = useRef<string | undefined>(chatPartnerId); // Create a ref for chatPartnerId
 
   useEffect(() => {
     chatPartnerIdRef.current = chatPartnerId; // Update ref value whenever chatPartnerId changes
@@ -183,7 +183,9 @@ const Chat = () => {
     >
       <ChatHeader
         isActive={
-          activeUsers != null && activeUsers?.includes(chatPartnerId) ? 10 : 0
+          activeUsers != null && activeUsers?.includes(chatPartnerId || "")
+            ? 10
+            : 0
         }
         id={chatPartnerId}
         activeUsers={null}

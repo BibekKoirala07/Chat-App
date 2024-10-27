@@ -65,8 +65,8 @@ const Home = () => {
   const [groupName, setGroupName] = useState("");
 
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const [users, setUsers] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [users, setUsers] = useState<Friend[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const state = useSelector((state: RootState) => state.user);
 
   const { _id } = state.data;
@@ -77,7 +77,7 @@ const Home = () => {
 
   const [socket, setSocket] = useState<Socket | null>(null);
 
-  const [activeUsers, setActiveUsers] = useState([]);
+  const [activeUsers, setActiveUsers] = useState<string[]>([]);
 
   // console.log("socket in home: ", socket);
 

@@ -9,7 +9,7 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 interface ChatHeaderProps {
   id: string | undefined;
   isActive?: number | null | string;
-  activeUsers?: [] | null;
+  activeUsers?: string[] | null;
   url: URL;
 }
 
