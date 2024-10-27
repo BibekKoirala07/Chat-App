@@ -67,29 +67,19 @@ const Login = () => {
 
       setIsLoading(false);
 
-      if (
-        !data.success &&
-        data.message == "You are not verified. Register again"
-      ) {
-        setError("You are not verified. Register your account");
-        setTimeout(() => {
-          navigate("/auth/register");
-        }, 2000);
-      }
-
-      if (!data.success) {
-        setError(data.message || "Login failed");
-      } else {
+      if (data.success) {
+        console.log("user cookie enalbed", navigator.cookieEnabled);
+        console.log("Login is success");
         setSuccess("Login successful!");
         dispatch(loginSuccess(data.data));
+        console.log("data in login", data);
         const cookieCanBeSet = areCookiesEnabled();
         if (!cookieCanBeSet) {
-          localStorage.setItem(
-            "chat-app-token",
-            JSON.stringify(data.data.token)
-          );
+          localStorage.setItem("chat-app-token", JSON.stringify(data.token));
         }
         navigate("/");
+      } else {
+        setError(data.message || "Login failed");
       }
     } catch (error) {
       setError((error as Error).message || "An error occurred during login");

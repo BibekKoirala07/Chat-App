@@ -88,13 +88,11 @@ const Register = () => {
       } else {
         setSuccess(data.message);
         if (data.data) {
+          console.log("user cookie enalbed", navigator.cookieEnabled);
           dispatch(loginSuccess(data.data)); // Update with correct action and payload
           const cookieCanBeSet = areCookiesEnabled();
           if (!cookieCanBeSet) {
-            localStorage.setItem(
-              "chat-app-token",
-              JSON.stringify(data.data.token)
-            );
+            localStorage.setItem("chat-app-token", JSON.stringify(data.token));
           }
         }
 
