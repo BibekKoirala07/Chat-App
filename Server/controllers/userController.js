@@ -99,7 +99,7 @@ const registerController = async (req, res, next) => {
       );
 
       return res
-        .cookie("token", token, {
+        .cookie("chat-app-token", token, {
           secure: false,
           expires: expiryDate,
           httpOnly: true,
@@ -119,10 +119,10 @@ const registerController = async (req, res, next) => {
     const { password: hashedPassword, ...data } = user._doc;
     const expiryDate = new Date(Date.now() + 3600000);
 
-    await sendVerificationEmail(email, user.verificationToken);
+    // await sendVerificationEmail(email, user.verificationToken); // it doesn't work in prouduction
 
     return res
-      .cookie("token", token, {
+      .cookie("chat-app-token", token, {
         secure: false,
         expires: expiryDate,
         httpOnly: true,
@@ -150,7 +150,7 @@ const loginController = async (req, res, next) => {
     if (user.isVerified) {
       const token = createJsonWebToken(user);
 
-      res.cookie("token", token, {
+      res.cookie("chat-app-token", token, {
         httpOnly: true,
         secure: false,
         expires: expiryDate,
@@ -203,7 +203,7 @@ const verifyEmailController = async (req, res, next) => {
 
     // Send a success response
     return res
-      .cookie("token", jsonToken, {
+      .cookie("chat-app-token", jsonToken, {
         secure: false,
         expires: expiryDate,
         httpOnly: true,
@@ -222,7 +222,7 @@ const verifyEmailController = async (req, res, next) => {
 
 const logoutController = async (req, res) => {
   console.log("logout done");
-  res.clearCookie("token");
+  res.clearCookie("chat-app-token");
   return res
     .status(200)
     .json({ success: true, message: "Logged out successfully" });

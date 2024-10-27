@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isVerified: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   {
@@ -67,6 +71,7 @@ userSchema.statics.registerStatics = async function (
     username,
     email,
     password: hash,
+    isVerified: true,
   });
 
   return user;

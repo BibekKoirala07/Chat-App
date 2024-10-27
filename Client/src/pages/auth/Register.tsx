@@ -3,9 +3,12 @@ import React, { useRef, useState } from "react";
 import AuthCard from "@/components/auth/AuthCard";
 import EachInput from "@/components/auth/EachInput";
 import { useNavigate } from "react-router-dom";
+import { loginSuccess } from "@/store/store";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
 
   const url =
     import.meta.env.VITE_NODE_ENV == "production"
@@ -101,12 +104,12 @@ const Register = () => {
         setIsLoading(false);
       } else {
         setSuccess(data.message);
-        // if (data.data) {
-        //   dispatch(loginSuccess(data.data)); // Update with correct action and payload
-        // }
+        if (data.data) {
+          dispatch(loginSuccess(data.data)); // Update with correct action and payload
+        }
 
         setTimeout(() => {
-          naviagte("/auth/verify-email");
+          naviagte("/");
         }, 4000);
       }
     } catch (error) {

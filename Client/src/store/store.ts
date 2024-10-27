@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
 
 // Configuring persist settings
 const persistConfig = {
-  key: "mern-starter",
+  key: "chat-app",
   storage,
   whitelist: ["user"],
 };
