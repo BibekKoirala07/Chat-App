@@ -10,7 +10,6 @@ A full-stack chat application built with Node.js, Express, Socket.IO, React (Vit
 - [Installation & Setup](#installation--setup)
 - [Environment Variables](#environment-variables)
 - [Running the Application](#running-the-application)
-- [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 
 ## Features
@@ -27,9 +26,9 @@ A full-stack chat application built with Node.js, Express, Socket.IO, React (Vit
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (v14.0.0 or higher)
-- npm (v6.0.0 or higher)
-- MongoDB (v4.0.0 or higher)
+- Node.js
+- npm
+- MongoDB
 - Git
 
 ## Project Structure
