@@ -50,7 +50,7 @@ chat-app/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/chat-app.git
+git clone https://github.com/BibekKoirala07/Chat-app.git
 cd chat-app
 ```
 
@@ -83,7 +83,7 @@ NODEMAILER_HOST="smtp.gmail.com"
 PROD_MONGO_URI=some mongo URI
 DEV_MONGO_URI=mongodb://localhost:27017/Chat-App
 DEV_FRONTEND_URL=http://localhost:5173
-PROD_FRONTEND_URL=https://chat-app-frontend-fs89.onrender.com
+PROD_FRONTEND_URL=
 NODE_ENV=development
 PORT=3000
 ```
